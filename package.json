@@ -1,0 +1,36 @@
+{
+  "name": "aquiline-ultra-pro",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Aquiline Ultra Pro Ltd — Global Technology Consultancy & Autonomous Operations Infrastructure Provider",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx",
+    "optimize:images": "node scripts/optimize-images.js",
+    "build:prod": "npm run optimize:images && npm run build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "lucide-react": "^0.441.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.90.0",
+    "react-router-dom": "^7.18.4",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.3",
+    "vite": "^5.4.3"
+  }
+}
