@@ -5,6 +5,7 @@
 /* =========================================================
    AQUILINE ULTRA PRO — Global Design System
    ========================================================= */
+
 @layer base {
   :root {
     --color-aquiline: 255 107 0;
@@ -17,9 +18,14 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
   }
 
-  /* ORIGINAL DARK MODE BODY - RESTORED */
+  section[id] {
+    scroll-margin-top: 9rem;
+  }
+
   body {
     @apply bg-slate-900 text-slate-100 overflow-x-hidden;
     background-image:
@@ -35,128 +41,10 @@
     color: #fff;
   }
 
-  /* ORIGINAL DARK SCROLLBAR - RESTORED */
   ::-webkit-scrollbar { width: 10px; height: 10px; }
   ::-webkit-scrollbar-track { background: #0A0F1D; }
   ::-webkit-scrollbar-thumb { background: #1B2340; border-radius: 5px; border: 2px solid #0A0F1D; }
   ::-webkit-scrollbar-thumb:hover { background: #FF6B00; }
-}
-
-@layer components {
-  /* Premium glassmorphism panel */
-  @layer components {
-  /* ORIGINAL GLASS PANEL - RESTORED */
-  .glass-panel {
-    @apply bg-slate-900/60 backdrop-blur-xl border border-white/5;
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.05),
-      0 20px 60px -20px rgba(0, 0, 0, 0.5);
-  }
-  /* ... keep the rest of your buttons and styles exactly as they were ... */
-}
-  /* Primary CTA button */
-  .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3
-           bg-aquiline-500 text-white font-semibold text-sm
-           rounded-lg overflow-hidden
-           transition-all duration-300 ease-premium
-           hover:bg-aquiline-600 hover:shadow-glow-orange
-           focus:outline-none focus:ring-2 focus:ring-aquiline-500/50 focus:ring-offset-2 focus:ring-offset-slate-900;
-  }
-
-  .btn-primary::before {
-    content: '';
-    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-  }
-
-  .btn-primary:hover::before {
-    @apply opacity-100;
-  }
-
-  /* Secondary / ghost button */
-  .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
-           text-slate-300 font-medium text-sm
-           border border-white/10 rounded-lg
-           transition-all duration-300 ease-premium
-           hover:border-aquiline-500/50 hover:text-white hover:bg-white/5;
-  }
-
-  /* Section heading utility */
-  .section-eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-aquiline-500;
-  }
-
-  .section-eyebrow::before {
-    content: '';
-    @apply block w-8 h-px bg-aquiline-500;
-  }
-
-  /* Subtle orange accent line */
-  .accent-line {
-    @apply h-px w-full bg-gradient-to-r from-transparent via-aquiline-500/50 to-transparent;
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  .mask-fade-b {
-    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
-  }
-}
-
-/* =========================================================
-   STAGE 2 — Node Network & Scroll Animations
-   ========================================================= */
-
-@layer utilities {
-  /* Node constellation animations */
-  .animate-node-appear {
-    animation: nodeAppear 1.2s ease-out both;
-  }
-  .animate-edge-draw {
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
-    animation: edgeDraw 2s ease-out forwards;
-  }
-  .animate-ping-slow {
-    animation: pingSlow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
-  }
-}
-
-@keyframes nodeAppear {
-  0% { opacity: 0; transform: scale(0); }
-  100% { opacity: 1; transform: scale(1); }
-}
-
-@keyframes edgeDraw {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes pingSlow {
-  0% { transform: scale(1); opacity: 0.6; }
-  75%, 100% { transform: scale(3.5); opacity: 0; }
-}
-@layer base {
-  section[id] {
-    scroll-margin-top: 9rem;
-  }
-}
-/* =========================================================
-   STAGE 9 — Smooth Scroll, Micro-Interactions & Polish
-   ========================================================= */
-
-@layer base {
-  /* Smooth scrolling for entire page */
-  html {
-    scroll-behavior: smooth;
-    /* Prevent scroll jank on mobile */
-    overscroll-behavior-y: none;
-  }
 
   /* Smooth transitions for all interactive elements */
   * {
@@ -179,6 +67,60 @@
 }
 
 @layer components {
+  /* Premium glassmorphism panel */
+  .glass-panel {
+    @apply bg-slate-900/60 backdrop-blur-xl border border-white/5;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 20px 60px -20px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Primary CTA button */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 px-6 py-3
+           bg-aquiline-500 text-white font-semibold text-sm
+           rounded-lg overflow-hidden
+           transition-all duration-300 ease-premium
+           hover:bg-aquiline-600 hover:shadow-glow-orange
+           focus:outline-none focus:ring-2 focus:ring-aquiline-500/50 focus:ring-offset-2 focus:ring-offset-slate-900
+           active:scale-95;
+  }
+
+  .btn-primary::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-300;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  }
+
+  .btn-primary:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Secondary / ghost button */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5
+           text-slate-300 font-medium text-sm
+           border border-white/10 rounded-lg
+           transition-all duration-300 ease-premium
+           hover:border-aquiline-500/50 hover:text-white hover:bg-white/5
+           active:scale-95;
+  }
+
+  /* Section heading utility */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-semibold tracking-[0.2em] uppercase text-aquiline-500;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    @apply block w-8 h-px bg-aquiline-500;
+  }
+
+  /* Subtle orange accent line */
+  .accent-line {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-aquiline-500/50 to-transparent;
+  }
+
   /* Card hover micro-interactions */
   .card-hover {
     @apply transition-all duration-300 ease-premium;
@@ -186,11 +128,6 @@
 
   .card-hover:hover {
     @apply -translate-y-1 shadow-glow-orange;
-  }
-
-  /* Button micro-interactions */
-  .btn-primary, .btn-ghost {
-    @apply active:scale-95;
   }
 
   /* Link underline animation */
@@ -249,6 +186,14 @@
 }
 
 @layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .mask-fade-b {
+    mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+  }
+
   /* Prevent layout shift during loading */
   .aspect-ratio {
     aspect-ratio: var(--aspect-ratio, 1);
@@ -265,16 +210,47 @@
     backface-visibility: hidden;
     perspective: 1000px;
   }
-}
-/* NEW: Alternating Section Backgrounds */
-.section-dark {
-  @apply bg-slate-900 text-slate-100;
+
+  /* Node constellation animations */
+  .animate-node-appear {
+    animation: nodeAppear 1.2s ease-out both;
+  }
+  .animate-edge-draw {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: edgeDraw 2s ease-out forwards;
+  }
+  .animate-ping-slow {
+    animation: pingSlow 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  }
+
+  /* Alternating Section Backgrounds (Ready if you ever need them) */
+  .section-dark {
+    @apply bg-slate-900 text-slate-100;
+  }
+
+  .section-light {
+    @apply bg-slate-100 text-slate-900;
+  }
+
+  .section-white {
+    @apply bg-white text-slate-900;
+  }
 }
 
-.section-light {
-  @apply bg-slate-100 text-slate-900;
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+@keyframes nodeAppear {
+  0% { opacity: 0; transform: scale(0); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-.section-white {
-  @apply bg-white text-slate-900;
+@keyframes edgeDraw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes pingSlow {
+  0% { transform: scale(1); opacity: 0.6; }
+  75%, 100% { transform: scale(3.5); opacity: 0; }
 }

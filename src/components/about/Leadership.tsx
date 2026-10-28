@@ -1,7 +1,33 @@
 import { useInView } from '@/hooks/useInView';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, Linkedin } from 'lucide-react';
-import { LEADERSHIP } from '@/lib/constants';
+
+const LEADERSHIP = [
+  {
+    tagline: 'Chief Paul Christian',
+    name: 'Founder & President',
+    image: '/images/founder.jpg',
+    background: '30+ experience as Public & Business Administrator, Economist.',
+  },
+  {
+    tagline: 'Engr Joe Nkoro',
+    name: 'Co-Founder & CEO',
+    image: '/images/ceo.jpg',
+    background: '15+ years in operations engineering across oil & gas and critical infrastructure.',
+  },
+  {
+    tagline: 'Ms Agatha Christie',
+    name: 'Company Secretary',
+    image: '/images/sec.jpg',
+    background: '9+ years experience in governance, statutory compliance and regulatory liaison across multiple corporate entities.',
+  },
+  {
+    tagline: 'Dr Emmanuel Okoro',
+    name: 'Chief Operating Officer',
+    image: '/images/coo.jpg',
+    background: 'Led multi-regional delivery for government and energy sector clients across Africa and EMEA.',
+  },
+];
 
 export default function Leadership() {
   const { ref, inView } = useInView();
@@ -33,24 +59,26 @@ export default function Leadership() {
         <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {LEADERSHIP.map((leader, i) => (
             <article
-              key={leader.initials}
+              key={leader.name}
               className={`group relative glass-panel rounded-2xl p-6 hover:border-aquiline-500/30 transition-all duration-700 ${
                 inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
               }`}
               style={{ transitionDelay: inView ? `${150 + i * 100}ms` : '0ms' }}
             >
-              {/* Avatar */}
+              {/* Avatar / Image */}
               <div className="relative mb-5">
-                <div className="aspect-square rounded-xl bg-gradient-to-br from-slate-800 to-slate-900 border border-white/5 flex items-center justify-center overflow-hidden">
-                  <span className="font-display text-4xl font-bold bg-gradient-to-br from-aquiline-400 to-aquiline-700 bg-clip-text text-transparent">
-                    {leader.initials}
-                  </span>
+                <div className="aspect-square rounded-xl bg-slate-900 border border-white/5 flex items-center justify-center overflow-hidden">
+                  <img 
+                    src={leader.image} 
+                    alt={leader.name} 
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="absolute inset-0 rounded-xl ring-1 ring-inset ring-white/5 group-hover:ring-aquiline-500/30 transition-all" />
               </div>
 
               <p className="text-[10px] font-bold tracking-[0.3em] uppercase text-aquiline-500">
-                {leader.role}
+                {leader.tagline}
               </p>
               <h3 className="mt-2 text-lg font-display font-bold text-white">
                 {leader.name}

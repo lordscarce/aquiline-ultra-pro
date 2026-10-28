@@ -5,7 +5,7 @@ import type { Config } from 'tailwindcss';
  * A tier-1 corporate palette: Deep Professional Orange, Slate Darks, Crisp Whites.
  */
 const config: Config = {
-   darkMode: 'class', 
+    
   content: ['./index.html', './src/**/*.{ts,tsx}'],
   theme: {
     extend: {

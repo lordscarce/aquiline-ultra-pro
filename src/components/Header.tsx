@@ -6,17 +6,12 @@ import MobileMenu from './MobileMenu';
 import { NAV_LINKS, type NavLink } from '@/lib/constants';
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const location = useLocation();
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -25,11 +20,7 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-premium ${
-        scrolled
-          ? 'bg-slate-900/80 backdrop-blur-2xl border-b border-white/5 shadow-glass'
-          : 'bg-transparent'
-      }`}
+      className="fixed top-0 inset-x-0 z-50 bg-[#0a0f1df7] border-b border-white/10"
       role="banner"
     >
       <div className="h-px w-full bg-gradient-to-r from-transparent via-aquiline-500/60 to-transparent" />

@@ -10,15 +10,17 @@ export default function AboutHero() {
     <section
       ref={ref}
       aria-labelledby="about-heading"
-      className="relative pt-32 lg:pt-40 pb-20 lg:pb-28 overflow-hidden"
+      className="relative pt-32 lg:pt-40 pb-20 lg:pb-28 overflow-hidden bg-[url('/images/abt-hero.webp')] bg-cover bg-center bg-no-repeat"
     >
+            {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/80 to-transparent z-0" aria-hidden="true" />
       {/* Ambient background */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div className="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
         <div className="absolute top-0 left-1/4 w-[600px] h-[600px] rounded-full bg-aquiline-500/8 blur-[140px]" />
         <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-slate-700/20 blur-[120px]" />
       </div>
 
-      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10">
+      <div className="relative mx-auto max-w-[1400px] px-6 lg:px-10 z-10">
         {/* Breadcrumb */}
         <nav aria-label="Breadcrumb" className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
           <ol className="flex items-center gap-2 text-xs text-slate-500">
