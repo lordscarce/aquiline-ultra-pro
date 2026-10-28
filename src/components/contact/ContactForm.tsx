@@ -68,24 +68,31 @@ export default function ContactForm() {
     setErrorMessage('');
 
     try {
+      // ✅ FIXED: Use FormData instead of JSON to fix 403 error
+      const formData = new FormData();
+      formData.append('fullName', data.fullName);
+      formData.append('email', data.email);
+      formData.append('organization', data.organization);
+      formData.append('region', data.region);
+      formData.append('serviceInterest', data.serviceInterest);
+      formData.append('message', data.message);
+      formData.append('_subject', `New Enterprise Inquiry: ${data.serviceInterest} - ${data.organization}`);
+      formData.append('_replyto', data.email); // Ensures replies go to the submitter
+
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json',
           'Accept': 'application/json',
         },
-        body: JSON.stringify({
-          ...data,
-          _subject: `New Enterprise Inquiry: ${data.serviceInterest} - ${data.organization}`,
-        }),
       });
 
       if (response.ok) {
         setStatus('success');
         reset();
       } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.errors?.[0]?.message || 'Failed to send message. Please try again.');
+        const errorData = await response.json().catch(() => ({}));
+        setErrorMessage(errorData.errors?.[0]?.message || `Failed to send message. Status: ${response.status}`);
         setStatus('error');
       }
     } catch (error) {
