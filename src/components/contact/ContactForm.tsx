@@ -1,15 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react'; // Added useRef
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useInView } from '@/hooks/useInView';
 import { Send, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import { SERVICE_OPTIONS } from '@/lib/constants';
+import ReCAPTCHA from "react-google-recaptcha"; // Added ReCAPTCHA
 
-// ✅ Your Formspree endpoint
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mljjdrve';
 
-// ✅ COMPLETE LIST OF ALL COUNTRIES
 const ALL_COUNTRIES = [
   "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan",
   "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi",
@@ -52,6 +51,9 @@ export default function ContactForm() {
   const { ref, inView } = useInView();
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  
+  // Ref for the reCAPTCHA
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
 
   const {
     register,
@@ -67,8 +69,15 @@ export default function ContactForm() {
     setStatus('submitting');
     setErrorMessage('');
 
+    // 1. Check if CAPTCHA is completed
+    const token = recaptchaRef.current?.getValue();
+    if (!token) {
+      setErrorMessage("Please complete the 'I am not a robot' verification.");
+      setStatus('error');
+      return;
+    }
+
     try {
-      // ✅ FIXED: Use FormData instead of JSON to fix 403 error
       const formData = new FormData();
       formData.append('fullName', data.fullName);
       formData.append('email', data.email);
@@ -77,7 +86,10 @@ export default function ContactForm() {
       formData.append('serviceInterest', data.serviceInterest);
       formData.append('message', data.message);
       formData.append('_subject', `New Enterprise Inquiry: ${data.serviceInterest} - ${data.organization}`);
-      formData.append('_replyto', data.email); // Ensures replies go to the submitter
+      formData.append('_replyto', data.email);
+      
+      // 2. Append the CAPTCHA token for Formspree
+      formData.append('g-recaptcha-response', token);
 
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -90,6 +102,7 @@ export default function ContactForm() {
       if (response.ok) {
         setStatus('success');
         reset();
+        recaptchaRef.current?.reset(); // Reset CAPTCHA after success
       } else {
         const errorData = await response.json().catch(() => ({}));
         setErrorMessage(errorData.errors?.[0]?.message || `Failed to send message. Status: ${response.status}`);
@@ -215,6 +228,15 @@ export default function ContactForm() {
             <p className="text-sm text-red-300">{errorMessage}</p>
           </div>
         )}
+
+        {/* Google reCAPTCHA Widget */}
+        <div className="flex justify-center sm:justify-start">
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey="6LejRwYuAAAAAO7LWJa5uR226xhR8uqXSKU72LY_" // <--- PASTE YOUR SITE KEY HERE
+            onChange={() => {}} 
+          />
+        </div>
 
         {/* Submit Button */}
         <button
